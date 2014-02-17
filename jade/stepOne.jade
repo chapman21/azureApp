@@ -1,0 +1,13 @@
+article.g17
+	div
+		h3.formTitle ToDo List
+		form(novalidate, name="form")
+			.formField.firstName.gen(firstname,req)
+			.formField.lastName.sec(lastname,req)
+			.formField.custnumber.gen(custnumber,req)
+			.formField.subject.sec(contactsubj,req)
+			.formField.email.gen(email,req)
+			.formField.phone.sec(phone)
+			.continue
+				div(btn,act="Continue", formname="test")
+			portalcancel

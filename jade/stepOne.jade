@@ -1,13 +1,29 @@
-article.g17
-	div
-		h3.formTitle ToDo List
-		form(novalidate, name="form")
-			.formField.firstName.gen(firstname,req)
-			.formField.lastName.sec(lastname,req)
-			.formField.custnumber.gen(custnumber,req)
-			.formField.subject.sec(contactsubj,req)
-			.formField.email.gen(email,req)
-			.formField.phone.sec(phone)
-			.continue
-				div(btn,act="Continue", formname="test")
-			portalcancel
+
+
+
+
+
+
+.c
+	This is some text!!!!
+	ul
+		li(style="background-color: #f9f0f0") A
+		li(style="background-color: #b08b8b") B
+		li(style="background-color: #efe195") C
+		li(style="background-color: #ccdfc4") D
+
+.gauge(data-gauge,data-min="0",data-max="100",data-percent="98", data-trembling)
+	div(data-arrow)
+
+
+a.orgBtn(data-ng-click="showAll()") Show All
+a.orgBtn(data-ng-click="submitBtn()") Show Incomplete
+
+a.orgBtn(data-ng-click="completed()") Show Complete
+
+a.orgBtn(data-ng-click="addTask()") Add
+
+
+ul(style="margin-top:3em;")
+	li(data-ng-repeat="task in tasks | orderBy:reverse", style="font-size:1em;")<a data-ng-click="go(task.id)">{{task.text}} {{task.complete}} </a>
+

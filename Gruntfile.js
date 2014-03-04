@@ -65,8 +65,9 @@ grunt.initConfig({
 		sassDir: 'sass/',
 		cssDir: 'css/',
 		imageDir: '../../public/img',
-		outputStyle: 'compressed',
-		importPath: '../../sass/'
+		outputStyle: 'expanded',
+		importPath: '../weblab/sass/',
+		debugInfo:true
 		//relativeAssets: false
 		},
 	server: {

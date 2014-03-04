@@ -1,0 +1,77 @@
+@import 'normalize/_normalize';
+@import '980grid/_allGrid';
+@import 'variables/_allVariables';
+@import 'mixins/_allMixins';
+@import 'elements/_allElements';
+@import 'classes/_allClasses';
+@import 'typography/_typo';
+@import 'breakers/_allBreakers';
+@import 'portals/_contactForms';
+@import 'application';
+@import "blueprint/fancy-type";
+
+body{
+	$alternate-text-font:"Warnock Pro", "Goudy Old Style", "Palatino", "Book Antiqua", Georgia, serif;
+}
+$grid-background-column-color:rgba(100, 100, 225, 0.25);
+//@mixin my-padding-mixin($some-number) {
+	//padding: $some-number;
+//}
+
+
+@function my-calculation-function($some-number, $another-number){
+	@return $some-number + $another-number
+}
+
+@function calc-percent($target, $container) {
+	@return ($target / $container) * 100%;
+}
+
+
+.gauge{
+	width: calc-percent(650px, 1000px);
+}
+//.gauge {
+	//@include my-padding-mixin(50px);
+//}
+
+.gauge {
+	padding: my-calculation-function(10px, 5px);
+}
+
+
+
+
+
+
+ul{
+	display: -moz-box-flex;
+	-moz-box-flex-direction: row-reverse;
+	-moz-box-flex-pack: center;
+	-moz-box-flex-align: center;
+	-moz-box-flex-wrap: wrap;
+}
+li {
+	font-size: 70px;
+	line-height: 100px;
+	text-align: center;
+	list-style-type: none;
+	-moz-box-flex: 1 0 200px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

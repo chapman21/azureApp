@@ -1,22 +1,16 @@
 
-<article class="g17">
-
-<h3 class="compTitle">Trey's ToDo Tutorial</h3>
-
-
-                <form id='add-item'>
-<div class="formField">
-    <label>Enter New Task</label>
-    <input type='text' id='new-item-text' placeholder='Enter new task' />
+<div class="c">
+  <This>is some text!!!!</This>
+  <ul>
+    <li style="background-color: #f9f0f0">A</li>
+    <li style="background-color: #b08b8b">B</li>
+    <li style="background-color: #efe195">C</li>
+    <li style="background-color: #ccdfc4">D</li>
+  </ul>
 </div>
-
-
-                    <button type='submit'>Add</button>
-                </form>
-
-
-            <ul id='todo-items'></ul>
-            <p id='summary'>Loading...</p>
-
-
-</article>
+<div data-gauge="data-gauge" data-min="0" data-max="100" data-percent="98" data-trembling="data-trembling" class="gauge">
+  <div data-arrow="data-arrow"></div>
+</div><a data-ng-click="showAll()" class="orgBtn">Show All</a><a data-ng-click="submitBtn()" class="orgBtn">Show Incomplete</a><a data-ng-click="completed()" class="orgBtn">Show Complete</a><a data-ng-click="addTask()" class="orgBtn">Add</a>
+<ul style="margin-top:3em;">
+  <li data-ng-repeat="task in tasks | orderBy:reverse" style="font-size:1em;"><a data-ng-click="go(task.id)">{{task.text}} {{task.complete}} </a></li>
+</ul>

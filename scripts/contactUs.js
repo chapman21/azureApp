@@ -4,79 +4,127 @@ angular.module("KnowledgePortal",['ngResource','globals','factories'])//.value('
 			$httpProvider.defaults.headers.get = {
 				'Accept' : 'application/json, text/javascript, */*'
 			};
+				$httpProvider.defaults.headers.common['X-ZUMO-APPLICATION'] = 'hNXqPpmseUSFJGgCgAFoeqVxDRJmEI93'; // add the application key
+				$httpProvider.defaults.headers.common['Content-Type'] = 'Application/json';
+			$httpProvider.defaults.headers.patch = {
+				'Content-Type': 'application/json;charset=utf-8'
+			}
+			$httpProvider.defaults.headers.post = {
+				'Content-Type': 'application/json;charset=utf-8'
+			}
+
+
+
 			$routeProvider
 					.when('/ContactUs', {
 						controller : 'StepOneController',
 						templateUrl : 'views/stepOne.html'
-					})
-					.when('/StepTwo', {
-						controller : 'StepTwoController',
-						templateUrl : 'views/stepTwo.html'
-					})
-					.when('/Verify', {
-						controller : 'VerifyController',
-						templateUrl : 'views/confirmation.html'
-					})
-					.when('/Complete', {
-						controller : 'CompleteController',
-						templateUrl : 'views/complete.html'
 					})
 					.otherwise({
 						redirectTo : '/ContactUs'
 					});
 }])
 
-.controller('StepOneController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
-			var stepOne = sessionStorage.stepOne;
-			var vehicleInfo= sessionStorage.vehicleInfo;
-			var complete= sessionStorage.complete;
-			sessionStorage.removeItem('vehicles');
-			if(stepOne !== undefined){
-				var one = sessionStorage.getItem('stepOne');
-				var cdOne = JSON.parse(one);
-				var formFill = {
-					fillIt : function() {
-						$scope.email = cdOne.email;
-						$scope.fn  = cdOne.firstname;
-						$scope.lastname  = cdOne.lastname;
-						$scope.phone  = cdOne.phone;
-						$scope.subject = cdOne.subject;
-						$scope.customernumber= cdOne.custnumber;
-					}
-				};
-				$timeout(formFill.fillIt, 100);
+.controller('StepOneController', ['$scope','$location','$timeout','Task', function($scope, $location, $timeout, Task){
+
+			function Person(name){
+				this.name = name;
 			}
-			$scope.setText = function(x){
-				var s = $("#sub option[value='" +  x + "']").text();
-				sessionStorage.subj = s;
-			};
-			$scope.next = function(){
-				_gaq.push(['_trackEvent', 'NEW Contact Form Started!', 'ContactUs']);
-				var stepOne = {
-					firstname : $scope.fn,
-					lastname : $scope.lastname,
-					phone : $scope.phone,
-					email : $scope.email,
-					subject : $scope.subject,
-					custnumber: $scope.customernumber
-				};
-				if($scope.subject === "vi"){
-					sessionStorage.vehicles = true;
-				}else{
-					sessionStorage.removeItem("vehicleInfo");
-					sessionStorage.removeItem("vehicles")
-				}
-				if($scope.subject === "vi" && complete && vehicleInfo === undefined){
-					sessionStorage.removeItem("complete");
-				}
-				sessionStorage.setItem('stepOne', JSON.stringify(stepOne));
-				if(sessionStorage.complete){
-					$location.path('/Verify')
-				}else{
-					$location.path("/StepTwo");
-				}
+			Person.prototype.sayName = function(){
+				console.log("Hello " + this.name)
 			}
+
+			var person1 = new Person("Trey");
+
+			console.log(person1.name);
+			person1.sayName();
+
+/*
+			function Person(){
+			}
+
+			var person1 = new Person();
+			console.log(person1)
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			//var todoItemTable;
+			//var a = Task.addTask();
+			//a.where({complete: false});
+			//todoItemTable = $scope.tasks;
+			//var a = "Yea!";
+			//var DTO ={
+				//"text": "Do it!",
+				//"complete":"false",
+				//"newColumn" : 'Yea!'
+			//};
+
+			/*Task.completed({param:"?$filter=(complete eq false)" +
+					"and" +
+					"(newColumn eq '" + a + "')"
+			}, successcb, errorcb)
+			*/
+			//Task.update({ id: , text: newText }).then(null, handleError);
+			//Task.addTask({},successcb, errorcb);
+			//function successcb(data){
+			//console.log(data)
+			//}
+			//function errorcb(err){
+				//console.log(err)
+			//}
 }])
+
+
+
+/*
+query.where(function (name, level) {
+	return this.assignee == name && this.difficulty == level;
+}, "david", "medium").read().done(function (results) {
+			alert(JSON.stringify(results));
+		}, function (err) {
+			alert("Error: " + err);
+		});
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .controller('StepTwoController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
 			var stepOne= sessionStorage.stepOne;
@@ -373,7 +421,37 @@ angular.module("directives", [])
             url : baseUrl
         }
     });
-}]);
+}])
+
+.factory('Task', function($resource) { // declaring a MyTable resource
+			var baseUrl= "https://treystest.azure-mobile.net/tables/todoitem/:param"
+			return $resource(baseUrl,{},{
+				notCompleted :{
+					method: 'GET',
+					url: baseUrl,
+					param: '@param',
+					isArray: true
+				},
+				completed:{
+						method: 'GET',
+						url: baseUrl,
+						param: '@param',
+						isArray: true
+				},
+				addTask:{
+					method: 'POST',
+					url: baseUrl + 'https://treystest.azure-mobile.net/api/test/',
+					isArray: true
+				},
+				changeText:{
+					url: baseUrl,
+					id: '@param',
+					method: 'PATCH'
+				}
+
+
+		});
+});
 
 
 

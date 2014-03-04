@@ -4,8 +4,6 @@ angular.module("KnowledgePortal",['ngResource','globals','factories'])//.value('
 			$httpProvider.defaults.headers.get = {
 				'Accept' : 'application/json, text/javascript, */*'
 			};
-
-
 				$httpProvider.defaults.headers.common['X-ZUMO-APPLICATION'] = 'hNXqPpmseUSFJGgCgAFoeqVxDRJmEI93'; // add the application key
 				$httpProvider.defaults.headers.common['Content-Type'] = 'Application/json';
 			$httpProvider.defaults.headers.patch = {
@@ -28,16 +26,97 @@ angular.module("KnowledgePortal",['ngResource','globals','factories'])//.value('
 }])
 
 .controller('StepOneController', ['$scope','$location','$timeout','Task', function($scope, $location, $timeout, Task){
-			var todoItemTable;
+
+			function Person(name){
+				this.name = name;
+			}
+			Person.prototype.sayName = function(){
+				console.log("Hello " + this.name)
+			}
+
+			var person1 = new Person("Trey");
+
+			console.log(person1.name);
+			person1.sayName();
+
+/*
+			function Person(){
+			}
+
+			var person1 = new Person();
+			console.log(person1)
+*/
+
+var DTO ={
+			"text": "added via custom api",
+			"complete":"true",
+			"newColumn" : 'Yea!'
+			};
+
+Task.allTasks({},{},successcb, errorcb)
+
+$scope.showAll= function(){
+	Task.allTasks({},{},successcb, errorcb)
+}
+
+var sql = "text eq'Do It!'";
+
+
+$scope.go= function(x){
+	Task.removeTask({param:x}, successrefresh, errorcb)
+}
+
+
+$scope.submitBtn = function(){
+	Task.notCompleted({param:"?$filter=(" + sql + ")"}, successcb, errorcb)
+}
+
+$scope.completed =  function(){
+	Task.notCompleted({param:"?$filter=(complete eq true)"}, successcb, errorcb)
+}
+
+$scope.addTask= function(){
+	Task.addTask({},DTO, successcb, errorcb)
+}
+			function successrefresh(){
+				Task.allTasks({},{},successcb, errorcb)
+			}
+			function successcb(data){
+				console.log(data);
+				$scope.tasks = data;
+			}
+
+			function errorcb(err){
+				console.log(err)
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			//var todoItemTable;
 			//var a = Task.addTask();
 			//a.where({complete: false});
 			//todoItemTable = $scope.tasks;
-			var a = "Yea!";
-			var DTO ={
-				"text": "Do it!",
-				"complete":"false",
-				"newColumn" : 'Yea!'
-			};
+			//var a = "Yea!";
+			//var DTO ={
+				//"text": "Do it!",
+				//"complete":"false",
+				//"newColumn" : 'Yea!'
+			//};
 
 			/*Task.completed({param:"?$filter=(complete eq false)" +
 					"and" +
@@ -45,13 +124,13 @@ angular.module("KnowledgePortal",['ngResource','globals','factories'])//.value('
 			}, successcb, errorcb)
 			*/
 			//Task.update({ id: , text: newText }).then(null, handleError);
-			Task.addTask({},successcb, errorcb);
-			function successcb(data){
-			console.log(data)
-			}
-			function errorcb(err){
-				console.log(err)
-			}
+			//Task.addTask({},successcb, errorcb);
+			//function successcb(data){
+			//console.log(data)
+			//}
+			//function errorcb(err){
+				//console.log(err)
+			//}
 }])
 
 

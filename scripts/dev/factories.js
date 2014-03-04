@@ -17,12 +17,17 @@ angular.module("factories", [])
     });
 }])
 
+
+
+
+
+
 .factory('Task', function($resource) { // declaring a MyTable resource
 			var baseUrl= "https://treystest.azure-mobile.net/tables/todoitem/:param"
 			return $resource(baseUrl,{},{
 				notCompleted :{
 					method: 'GET',
-					url: baseUrl,
+					url: baseUrl + "?",
 					param: '@param',
 					isArray: true
 				},
@@ -34,13 +39,23 @@ angular.module("factories", [])
 				},
 				addTask:{
 					method: 'POST',
-					url: baseUrl + 'https://treystest.azure-mobile.net/api/test/',
+					url:'https://treystest.azure-mobile.net/api/test/',
 					isArray: true
 				},
 				changeText:{
 					url: baseUrl,
 					id: '@param',
 					method: 'PATCH'
+				},
+				allTasks:{
+					url:baseUrl,
+					method:"GET",
+					isArray:true
+				},
+				removeTask:{
+					url:baseUrl,
+					method:"DELETE",
+					param: '@param'
 				}
 
 
